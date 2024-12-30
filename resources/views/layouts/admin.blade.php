@@ -45,7 +45,7 @@
                         <div class="flex items-center">
                             <a href="{{ route('admin.logout') }}"
                                 class="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-900 hover:text-white">
-                                {{ __('button.sign_out') }}
+                                {{ __('auth.sign_out') }}
                             </a>
                         </div>
                     </header>
