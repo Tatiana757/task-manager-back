@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -15,9 +15,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::updateOrCreate(["login"=> "admin"], [
-            "name" => "Администратор",
-            "password" => bcrypt('password'),
-        ]);
+        $admin = User::firstOrCreate(
+            ['login' => 'admin'],
+            [
+                'name' => 'Администратор',
+                'password' => Hash::make('password'),
+            ]
+        );
+        
+        $admin->assignRole('admin');
     }
 }

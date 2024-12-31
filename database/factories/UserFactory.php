@@ -25,9 +25,17 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'login' => $this->faker->unique()->userName(),
-            'password' => static::$password ??= Hash::make('password'),
+            'login' => fake()->unique()->userName(),
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function ($user) {
+            $role = fake()->randomElement(['project_manager', 'developer']);
+            $user->assignRole($role);
+        });
     }
 }
