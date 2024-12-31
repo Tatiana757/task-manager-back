@@ -22,7 +22,7 @@ class UserController extends Controller
         
         return response()->json([
             'user' => new UserResource($user),
-            'roles' => $user->getRoleNames(),
+            'role' => $user->getRoleNames()->first(),
             'permissions' => $user->getAllPermissions()->pluck('name'),
         ]);
     }

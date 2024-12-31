@@ -29,8 +29,12 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('api-token')->plainTextToken;
-
-        return response()->json((new UserResource($user))->additional(['token' => $token]));
+        
+        return response()->json([
+            'user' => (new UserResource($user))->additional(['token' => $token]),
+            'role' => $user->getRoleNames()->first(),
+            'permissions' => $user->getAllPermissions()->pluck('name'),
+        ]);
     }
 
     public function logout(Request $request)
