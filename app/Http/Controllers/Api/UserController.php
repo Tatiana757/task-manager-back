@@ -15,4 +15,15 @@ class UserController extends Controller
 
         return UserResource::collection($users);
     }
+
+    public function getCurrentUser()
+    {
+        $user = auth()->user();
+        
+        return response()->json([
+            'user' => new UserResource($user),
+            'roles' => $user->getRoleNames(),
+            'permissions' => $user->getAllPermissions()->pluck('name'),
+        ]);
+    }
 }

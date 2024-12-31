@@ -14,5 +14,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('tasks', TaskController::class);
 
         Route::get('/users', [UserController::class, 'getUsers']);
+
+        Route::get('/user/profile', [UserController::class, 'getCurrentUser']);
     });
 });
