@@ -44,20 +44,12 @@ class TaskController extends Controller
     {
         $this->authorize("edit-tasks");
 
-        if ($request->has('status') && !auth()->user()->can('change-task-status')) {
-            return response()->json([
-                'error' => [
-                    'message' => 'У вас нет прав на изменение статуса задачи'
-                ]
-            ], 403);
+        if (!auth()->user()->can('change-task-status')) {
+            $request->offsetUnset('status');
         }
         
         if ($request->has('responsible_user_id') && !auth()->user()->can('assign-task-responsible')) {
-            return response()->json([
-                'error' => [
-                    'message' => 'У вас нет прав на назначение ответственного'
-                ]
-            ], 403);
+            $request->offsetUnset('responsible_user_id');
         }
 
         $task->update($request->validated());
